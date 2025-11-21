@@ -5,65 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ContactHub — Prototype</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-.thumb { width:100%; height:150px; background:#eef2ff; display:flex;align-items:center;justify-content:center; flex-shrink:0; }
-.card { transition: all 0.3s; display:flex; flex-direction:column; background:white; border-radius:0.5rem; border:1px solid #cbd5e1; overflow:hidden; }
-.card.row { flex-direction:row; align-items:center; }
-.card .info { flex:1; margin-top:0.5rem; padding:0.5rem; }
-.card.row .info { margin-top:0; margin-left:1rem; }
-.tag, .filter-tag { display:inline-block; background:#e0e7ff; color:#3730a3; padding:0.25rem 0.5rem; border-radius:9999px; font-size:0.75rem; margin-right:0.25rem; margin-bottom:0.25rem; cursor:pointer; transition: background 0.2s; }
-.tag.active, .filter-tag.active { background:#6366f1; color:white; }
-.grid.single-column { grid-template-columns:1fr !important; }
-.mode-btn { width:32px; height:32px; border-radius:8px; border:1px solid #cbd5e1; display:flex; align-items:center; justify-content:center; cursor:pointer; transition: background 0.2s; }
-.mode-btn:hover { background:#e0e7ff; }
-.language-menu { position:relative; display:inline-block; }
-.language-menu-content { display:none; position:absolute; background:white; min-width:100px; box-shadow:0 8px 16px rgba(0,0,0,0.2); border-radius:0.25rem; z-index:10; }
-.language-menu-content button { display:block; width:100%; padding:0.5rem; text-align:left; border:none; background:none; cursor:pointer; }
-.language-menu-content button:hover { background:#e0e7ff; }
+/* --------------------------
+   CARD STYLES
+--------------------------- */
+.card { transition: all 0.3s; background: white; border-radius: 0.75rem; border: 1px solid #cbd5e1; overflow: hidden; display: flex; flex-direction: column; }
+.card.row { flex-direction: row; height: 160px; }
+.card .thumb { background: #eef2ff; display: flex; align-items: center; justify-content: center; }
+.card.row .thumb { width: 150px; height: 158px; }
+.card.col .thumb { width: 100%; aspect-ratio: 1/1; }
+.card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.card .info { padding: 0.75rem; }
+.card.row .info { padding-left: 1rem; }
+/* TAGS */
+.tag, .filter-tag { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.75rem; cursor: pointer; }
+.tag.active, .filter-tag.active { background: #6366f1; color: white; }
+/* GRID */
+.grid.single-column { grid-template-columns: 1fr !important; }
+.grid.three-column { grid-template-columns: repeat(3, 1fr) !important; gap: 1rem; }
+/* MODE BUTTONS */
+.mode-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid #cbd5e1; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+/* LANGUAGE MENU */
+.language-menu { position: relative; }
+.language-menu-content { display: none; position: absolute; background: white; min-width: 100px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0.25rem; z-index: 10; }
+.language-menu-content button { display: block; width: 100%; padding: 0.5rem; text-align: left; border: none; background: none; cursor: pointer; }
+.language-menu-content button:hover { background: #e0e7ff; }
+/* QUEES FILTER BAR */
+#queesFilterBar { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.25rem; background: white; border-radius: 9999px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.quees-btn { cursor: pointer; font-weight: 500; padding: 0.5rem 1rem; border-radius: 9999px; transition: all 0.2s; white-space: nowrap; }
+.quees-btn:hover { background-color: #6366f1; color: white; }
+.quees-btn.active { background-color: #6366f1; color: white; }
+/* FILTER BLOCKS */
+.filter-block { margin-bottom: 1rem; }
+.filter-block h4 { font-weight: 600; margin-bottom: 0.5rem; }
+/* ACCORDION */
+.aside-card { background: #f8fafc; border-radius: 1rem; padding: 0; overflow: hidden; border: 1px solid rgba(15,23,42,0.04); }
+.aside-card .accordion-btn { width: 100%; display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: transparent; border: none; cursor: pointer; }
+.aside-card .accordion-icon { transition: transform .25s ease; }
+.aside-card .accordion-content { padding: 0.5rem 0.75rem 1rem 0.75rem; }
+.aside-card .filter-tag { display: flex; align-items: center; width: 100%; padding: 0.5rem 0.75rem; margin-bottom: 0.375rem; border-radius: 0.75rem; background: #f1f5f9; color: #0f172a; font-weight: 600; cursor: pointer; transition: background .15s ease,color .15s ease,transform .08s; }
+.aside-card .filter-tag:hover { background: #e2e8f0; }
+.aside-card .filter-tag.active { background: #cbd5e1; color: #0f172a; }
 </style>
 </head>
+
 <body class="bg-slate-50 text-slate-900">
 <div class="min-h-screen p-6">
+
 <header class="max-w-6xl mx-auto mb-6 flex flex-col gap-4">
-  <div class="flex items-center justify-between">
-    <div>
-      <h1 id="title" class="text-2xl font-bold">ContactHub</h1>
-      <div id="subtitle" class="text-sm text-slate-600"></div>
-    </div>
-    <div class="flex gap-2 items-center">
-      <div class="language-menu">
-        <button id="langBtn" class="px-3 py-2 border rounded">Llengua</button>
-        <div id="langMenu" class="language-menu-content">
-          <button data-lang="ca">Català</button>
-          <button data-lang="es">Castellà</button>
-          <button data-lang="en">English</button>
-        </div>
-      </div>
-      <div class="flex gap-2">
-        <div id="singleColBtn" class="mode-btn" title="1 columna">☰</div>
-        <div id="normalColBtn" class="mode-btn" title="Normal">☷</div>
+<div class="flex items-center justify-between">
+  <div>
+    <h1 id="title" class="text-2xl font-bold">ContactHub</h1>
+    <div id="subtitle" class="text-sm text-slate-600"></div>
+  </div>
+  <div class="flex gap-3 items-center">
+    <div class="language-menu">
+      <button id="langBtn" class="px-3 py-2 border rounded-full bg-white">Llengua</button>
+      <div id="langMenu" class="language-menu-content rounded">
+        <button data-lang="ca">Català</button>
+        <button data-lang="es">Castellà</button>
+        <button data-lang="en">English</button>
       </div>
     </div>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-    <div class="md:col-span-2">
-      <input id="searchInput" placeholder="" class="w-full p-3 rounded border" />
-    </div>
-    <div>
-      <select id="queesFilter" class="w-full p-3 rounded border"></select>
+    <div class="flex gap-2">
+      <div id="singleColBtn" class="mode-btn" title="1 columna">☰</div>
+      <div id="normalColBtn" class="mode-btn" title="3 columnes">☷</div>
     </div>
   </div>
+</div>
+<div class="flex flex-col gap-3">
+  <div id="queesFilterBar"></div>
+  <input id="searchInput" placeholder="Cerca..." class="w-full p-3 rounded-full border bg-white" />
+</div>
 </header>
 
 <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
-  <aside class="hidden lg:block lg:col-span-1 bg-white p-4 rounded border">
-    <h4 id="categoryTitle" class="font-semibold mb-2"></h4>
-    <div id="filterTags" class="flex flex-wrap gap-2 max-h-[60vh] overflow-auto"></div>
-  </aside>
-  <section class="lg:col-span-3">
-    <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-500"></div>
-    <div id="noResults" class="hidden col-span-full p-6 bg-white rounded border text-slate-600"></div>
-  </section>
+<aside class="hidden lg:block space-y-4">
+  <div class="aside-card">
+    <button class="accordion-btn">
+      <h3 class="text-lg m-0 font-semibold">Categoria</h3>
+      <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+    </button>
+    <div class="accordion-content" id="filterTags"></div>
+  </div>
+  <div class="aside-card">
+    <button class="accordion-btn">
+      <h3 class="text-lg m-0 font-semibold">Nacionalitat</h3>
+      <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+    </button>
+    <div class="accordion-content" id="nacionalityFilters"></div>
+  </div>
+  <div class="aside-card">
+    <button class="accordion-btn">
+      <h3 class="text-lg m-0 font-semibold">Any de naixement</h3>
+      <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+    </button>
+    <div class="accordion-content" id="yearFilters"></div>
+  </div>
+</aside>
+
+<section class="lg:col-span-3">
+  <div id="grid" class="grid grid-cols-1 md:grid-cols-1 gap-4 transition-all duration-500"></div>
+  <div id="noResults" class="hidden p-6 bg-white rounded border text-slate-600"></div>
+</section>
 </main>
 
 <footer class="max-w-6xl mx-auto mt-12 text-sm text-slate-500">
@@ -72,125 +117,203 @@
 </div>
 
 <script>
-// ===== DATA =====
 const contacts = [
-{"nom":"Pau Oriol Oliva","sobrenom":null,"any":2007,"nacionalitat":"","quan":"","desc":"(Unes frases que descriguin la personalitat...)","quees":"Millor Amic/Amiga,Familia","d_on":"Familia","categoria":"Surfers,Festa,Madrid,Matrimoni,Confiança,Feina","imatge":"pau.jpg"},
-{"nom":"David Ardila Coronado","sobrenom":"Deimos","any":2007,"nacionalitat":"","quan":"","desc":"Jefe","quees":"Millor Amic/Amiga","d_on":"Institut","categoria":"Duo,Insti,Insti Clase,Confiança","imatge":"david.jpg"},
-{"nom":"Bep Barneda Fusté","sobrenom":"Bepiii","any":2007,"nacionalitat":"","quan":"","desc":"Millor amic d’en Pau a Batxillerat, ara no. Peculiar però molt bona persona.","quees":"Amic/Amiga","d_on":"Per en Pau","categoria":"Festa,Madrid,Matrimoni,Confiança","imatge":"bep.jpg"},
-{"nom":"Martí Ferrer","sobrenom":"Martrixx_","any":2007,"nacionalitat":"","quan":"","desc":"Geni.","quees":"Millor Amic/Amiga","d_on":"Institut","categoria":"Festa,Surfers,Insti,Insti Clase,Confiança","imatge":"marti.jpg"},
-{"nom":"Laia Viton","sobrenom":null,"any":2007,"nacionalitat":"","quan":"","desc":"Una tiktoker mas.","quees":"Millor Amic/Amiga","d_on":"Institut","categoria":"Feina,Confiança","imatge":"laia.jpg"},
-{"nom":"Fee Lina","sobrenom":null,"any":2007,"nacionalitat":"","quan":"","desc":"Està bona, bastant guapa.","quees":"Conegut/Coneguda","d_on":"Càmping","categoria":"Càmping,Interès,Guiri","imatge":"fee.jpg"},
-{"nom":"Floor Van Dongen","sobrenom":"Xinita","any":2009,"nacionalitat":"","quan":"","desc":"Podria ser l’amor de la meva vida.","quees":"Amic/Amiga,Conegut/Coneguda","d_on":"Càmping","categoria":"Càmping,Interès,Guiri,Confiança","imatge":"floor.jpg"},
-{"nom":"Iris Cramer","sobrenom":null,"any":2009,"nacionalitat":"","quan":"","desc":"Podria haver estat l’amor de la meva vida. Actualment està fatal del cap. Molts problemes familiars","quees":"Conegut/Coneguda","d_on":"Càmping","categoria":"Càmping,Interès,Guiri","imatge":"iris.jpg"},
-{"nom":"Joy","sobrenom":null,"any":2007,"nacionalitat":"","quan":"","desc":"Molt bona persona quan vol.","quees":"Conegut/Coneguda","d_on":"Càmping","categoria":"Càmping,Guiri","imatge":"joy.jpg"},
-{"nom":"Indy Maners","sobrenom":null,"any":2009,"nacionalitat":"","quan":"","desc":"Molt bona persona, molt guapa.","quees":"Amic/Amiga,Conegut/Coneguda","d_on":"Càmping","categoria":"Càmping,Interès,Guiri,Confiança","imatge":"indy.jpg"}
+  {"nom":"Pau Oriol Oliva","sobrenom":null,"any":"2007","nacionalitat":"Catalunya","desc":"(Unes frases que descriguin la personalitat...)","quees":"Millor Amic/Amiga,Familia","categoria":"Surfers,Festa,Madrid,Matrimoni,Confiança,Feina","imatge":"pau.jpg"},
+  {"nom":"David Ardila Coronado","sobrenom":"Deimos","any":"","nacionalitat":"Catalunya","desc":"Jefe","quees":"Millor Amic/Amiga","categoria":"Duo,Insti,Insti Clase,Confiança","imatge":"david.jpg"},
+  {"nom":"Bep Barneda Fusté","sobrenom":"Bepiii","any":"","nacionalitat":"Catalunya","desc":"Millor amic d’en Pau a Batxillerat, ara no.","quees":"Amic/Amiga","categoria":"Festa,Madrid,Matrimoni,Confiança","imatge":"bep.jpg"},
+  {"nom":"Martí Ferrer","sobrenom":"Martrixx_","any":"","nacionalitat":"Catalunya","desc":"Geni.","quees":"Millor Amic/Amiga","categoria":"Festa,Surfers,Insti,Insti Clase,Confiança","imatge":"marti.jpg"},
+  {"nom":"Laia Viton","sobrenom":null,"any":"","nacionalitat":"Catalunya","desc":"Una tiktoker mas.","quees":"Millor Amic/Amiga","categoria":"Feina,Confiança","imatge":"laia.jpg"},
+  {"nom":"Fee Lina","sobrenom":null,"any":"","nacionalitat":"Alemania","desc":"Està bona, bastant guapa.","quees":"Conegut/Coneguda","categoria":"Càmping,Interès,Guiri","imatge":"fee.jpg"},
+  {"nom":"Floor Van Dongen","sobrenom":"Xinita","any":"2009","nacionalitat":"Paisos Baixos","desc":"Podria ser l’amor de la meva vida.","quees":"Amic/Amiga,Conegut/Coneguda","categoria":"Càmping,Interès,Guiri,Confiança","imatge":"floor.jpg"},
+  {"nom":"Iris Cramer","sobrenom":null,"any":"","nacionalitat":"Paisos Baixos","desc":"Actualment està fatal del cap.","quees":"Conegut/Coneguda","categoria":"Càmping,Interès,Guiri","imatge":"iris.jpg"},
+  {"nom":"Joy","sobrenom":null,"any":"","nacionalitat":"Paisos Baixos","desc":"Molt bona persona quan vol.","quees":"Conegut/Coneguda","categoria":"Càmping,Guiri","imatge":"joy.jpg"},
+  {"nom":"Indy Maners","sobrenom":null,"any":"","nacionalitat":"Paisos Baixos","desc":"Molt bona persona, molt guapa.","quees":"Amic/Amiga,Conegut/Coneguda","categoria":"Càmping,Interès,Guiri,Confiança","imatge":"indy.jpg"}
 ];
 
-// ===== TRANSLATIONS =====
-const translations = {
-  ca:{ subtitle:'Navega els teus contactes i amics.', search:'Cerca per nom, sobrenom...', all:'Tots', noResults:"No s'han trobat resultats", categoryTitle:"Filtra per categoria/grup", queesMap:{"Millor Amic/Amiga":"Millor Amic/Amiga","Amic/Amiga":"Amic/Amiga","Familia":"Familia","Conegut/Coneguda":"Conegut/Coneguda"}, langBtn:"Llengua" },
-  es:{ subtitle:'Navega tus contactos y amigos.', search:'Buscar por nombre, sobrenombre...', all:'Todos', noResults:"No se encontraron resultados", categoryTitle:"Filtra por categoría/grupo", queesMap:{"Millor Amic/Amiga":"Mejor Amigo/Amiga","Amic/Amiga":"Amigo/Amiga","Familia":"Familia","Conegut/Coneguda":"Conocido/Conocida"}, langBtn:"Idioma" },
-  en:{ subtitle:'Browse your contacts and friends.', search:'Search by name, nickname...', all:'All', noResults:"No results found", categoryTitle:"Filter by category/group", queesMap:{"Millor Amic/Amiga":"Best Friend","Amic/Amiga":"Friend","Familia":"Family","Conegut/Coneguda":"Acquaintance"}, langBtn:"Language" }
-};
+let currentLang = 'ca';
+let translations = {};
+let singleColumnMode = true;
+let queesSelectValue = "All";
 
-// ===== FUNCTIONS =====
-let currentLang='ca';
-let singleColumnMode=false;
-let categoriesSet=new Set();
+/* --------------------------
+   LOAD TRANSLATIONS
+--------------------------- */
+async function loadTranslations(lang='ca'){
+  const res = await fetch(`${lang}.json`);
+  return await res.json();
+}
+
+async function switchLang(lang){
+  translations = await loadTranslations(lang);
+  currentLang = lang;
+  document.getElementById('subtitle').textContent = translations.subtitle;
+  document.getElementById('langBtn').textContent = translations.langBtn;
+  renderFilterTags();
+  renderNacionalityFilters();
+  renderYearFilters();
+  renderQueesFilterBar();
+  filterContacts();
+}
+
+/* --------------------------
+   FILTER DATA
+--------------------------- */
+let categoriesSet = new Set();
 contacts.forEach(c=>c.categoria.split(',').forEach(cat=>categoriesSet.add(cat.trim())));
-let categories=Array.from(categoriesSet).sort();
+let categories = Array.from(categoriesSet).sort();
+const filterTagsDiv = document.getElementById('filterTags');
 
-const filterTagsDiv=document.getElementById('filterTags');
 function renderFilterTags(){
   filterTagsDiv.innerHTML='';
   categories.forEach(cat=>{
     const span=document.createElement('span');
     span.className='filter-tag';
     span.dataset.orig=cat;
-    span.textContent=cat;
-    span.addEventListener('click',()=>{span.classList.toggle('active'); filterContacts();});
+    span.textContent = translations.categories && translations.categories[cat] ? translations.categories[cat] : cat;
+    span.onclick=()=>{span.classList.toggle('active'); filterContacts();};
     filterTagsDiv.appendChild(span);
   });
 }
 
-let queesOrder=["Millor Amic/Amiga","Amic/Amiga","Familia","Conegut/Coneguda"];
-const queesSelect=document.getElementById('queesFilter');
-function renderQueesOptions(){
-  queesSelect.innerHTML='';
-  const optAll=document.createElement('option');
-  optAll.value="All"; optAll.textContent=translations[currentLang].all;
-  queesSelect.appendChild(optAll);
-  queesOrder.forEach(q=>{
-    const opt=document.createElement('option');
-    opt.value=q; opt.textContent=translations[currentLang].queesMap[q] || q;
-    queesSelect.appendChild(opt);
+const nacionalityFiltersDiv = document.getElementById('nacionalityFilters');
+let nacionalities=Array.from(new Set(contacts.map(c=>c.nacionalitat))).sort();
+function renderNacionalityFilters(){
+  nacionalityFiltersDiv.innerHTML='';
+  nacionalities.forEach(n=>{
+    const span=document.createElement('span');
+    span.className='filter-tag';
+    span.dataset.orig=n;
+    span.textContent = translations.nacionalities && translations.nacionalities[n] ? translations.nacionalities[n] : n;
+    span.onclick=()=>{span.classList.toggle('active'); filterContacts();};
+    nacionalityFiltersDiv.appendChild(span);
   });
 }
 
+const yearFiltersDiv = document.getElementById('yearFilters');
+let years=Array.from(new Set(contacts.map(c=>c.any))).sort();
+function renderYearFilters(){
+  yearFiltersDiv.innerHTML='';
+  years.forEach(y=>{
+    const span=document.createElement('span');
+    span.className='filter-tag';
+    span.dataset.orig=y;
+    span.textContent=y;
+    span.onclick=()=>{span.classList.toggle('active'); filterContacts();};
+    yearFiltersDiv.appendChild(span);
+  });
+}
+
+/* --------------------------
+   QUEES FILTER
+--------------------------- */
+const queesOrder=["Millor Amic/Amiga","Amic/Amiga","Familia","Conegut/Coneguda"];
+const queesFilterBar=document.getElementById('queesFilterBar');
+
+function renderQueesFilterBar(){
+  queesFilterBar.innerHTML='';
+  const allBtn=document.createElement('button');
+  allBtn.textContent=translations.all || 'Tots';
+  allBtn.className='quees-btn active';
+  allBtn.onclick=()=>{queesOrderBtnClick('All',allBtn);};
+  queesFilterBar.appendChild(allBtn);
+  queesOrder.forEach(q=>{
+    const btn=document.createElement('button');
+    btn.textContent=translations.queesMap && translations.queesMap[q] ? translations.queesMap[q] : q;
+    btn.className='quees-btn';
+    btn.onclick=()=>{queesOrderBtnClick(q,btn);};
+    queesFilterBar.appendChild(btn);
+  });
+}
+
+/* --------------------------
+   RENDER CONTACTS
+--------------------------- */
 const grid=document.getElementById('grid');
 function renderContacts(list){
   grid.innerHTML='';
-  if(list.length===0){document.getElementById('noResults').classList.remove('hidden'); return;}
-  else{document.getElementById('noResults').classList.add('hidden');}
-  grid.classList.toggle('single-column', singleColumnMode);
+  grid.classList.remove('single-column','three-column');
+  grid.classList.add(singleColumnMode?'single-column':'three-column');
+
+  if(list.length===0){
+    document.getElementById('noResults').classList.remove('hidden');
+    document.getElementById('noResults').textContent=translations.noResults || 'No s’han trobat resultats';
+    return;
+  }
+  document.getElementById('noResults').classList.add('hidden');
+
   list.forEach(c=>{
-    const div=document.createElement('div');
-    div.className='card transition-all duration-300'+(singleColumnMode?' row':'');
-    const sobrenomText=c.sobrenom? ` (${c.sobrenom})`:'';
-    const tagsHTML=c.categoria.split(',').map(cat=>`<span class="tag">${cat}</span>`).join('');
-    div.innerHTML=`
-      <div class="thumb"><img src="img/${c.imatge}" alt="${c.nom}" class="w-full h-full object-cover"/></div>
-      <div class="info">
-        <h3 class="font-semibold">${c.nom}${sobrenomText}</h3>
-        <p class="text-sm text-slate-700 mt-1">${c.desc}</p>
-        <div class="mt-2 flex flex-wrap gap-1">${tagsHTML}</div>
-      </div>
-    `;
-    grid.appendChild(div);
+    const sobrenom=c.sobrenom?` (${c.sobrenom})`:'';
+    const tagsHTML=c.categoria.split(',').map(cat=>{
+      return `<span class="tag">${translations.categories && translations.categories[cat] ? translations.categories[cat] : cat}</span>`;
+    }).join('');
+    const desc = translations.descriptions && translations.descriptions[c.nom] ? translations.descriptions[c.nom] : c.desc;
+    const card=document.createElement('div');
+    card.className='card';
+    if(singleColumnMode) card.classList.add('row'); else card.classList.add('col');
+    card.innerHTML=`<div class="thumb"><img src="img/${c.imatge}" class="w-full h-full object-cover"/></div>
+      <div class="info"><h3 class="font-semibold">${c.nom}${sobrenom}</h3>
+      <p class="text-sm text-slate-700 mt-1">${desc}</p>
+      <div class="mt-2 flex flex-wrap gap-1">${tagsHTML}</div></div>`;
+    grid.appendChild(card);
   });
 }
 
+/* --------------------------
+   FILTERING
+--------------------------- */
 function filterContacts(){
   const term=document.getElementById('searchInput').value.toLowerCase();
-  const queesVal=queesSelect.value;
-  const activeCats=Array.from(filterTagsDiv.querySelectorAll('.filter-tag.active')).map(span=>span.dataset.orig);
+  const activeCats=Array.from(filterTagsDiv.querySelectorAll('.filter-tag.active')).map(s=>s.dataset.orig);
+  const activeNats=Array.from(nacionalityFiltersDiv.querySelectorAll('.filter-tag.active')).map(s=>s.dataset.orig);
+  const activeYears=Array.from(yearFiltersDiv.querySelectorAll('.filter-tag.active')).map(s=>s.dataset.orig);
+
   const filtered=contacts.filter(c=>{
-    const matchesSearch=c.nom.toLowerCase().includes(term) || (c.sobrenom? c.sobrenom.toLowerCase().includes(term):false);
-    const matchesQuees=queesVal==='All'? true : c.quees.split(',').map(x=>x.trim()).includes(queesVal);
-    const matchesCats=activeCats.length===0? true : activeCats.every(cat=>c.categoria.split(',').map(x=>x.trim()).includes(cat));
-    return matchesSearch && matchesQuees && matchesCats;
+    const matchesSearch=c.nom.toLowerCase().includes(term)||(c.sobrenom?c.sobrenom.toLowerCase().includes(term):false);
+    const matchesQuees=queesSelectValue==='All'?true:c.quees.split(',').map(x=>x.trim()).includes(queesSelectValue);
+    const matchesCats=activeCats.length===0?true:activeCats.every(cat=>c.categoria.split(',').map(x=>x.trim()).includes(cat));
+    const matchesNats=activeNats.length===0?true:activeNats.includes(c.nacionalitat);
+    const matchesYears=activeYears.length===0?true:activeYears.includes(c.any);
+    return matchesSearch&&matchesQuees&&matchesCats&&matchesNats&&matchesYears;
   });
+
   renderContacts(filtered);
 }
 
-// ===== EVENTS =====
-document.getElementById('searchInput').addEventListener('input', filterContacts);
-queesSelect.addEventListener('change', filterContacts);
-renderFilterTags();
-renderQueesOptions();
-renderContacts(contacts);
-
-const langBtn=document.getElementById('langBtn');
-const langMenu=document.getElementById('langMenu');
-langBtn.addEventListener('click',()=>{langMenu.style.display=langMenu.style.display==='block'?'none':'block';});
-langMenu.querySelectorAll('button').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    currentLang=btn.dataset.lang;
-    document.getElementById('subtitle').textContent=translations[currentLang].subtitle;
-    document.getElementById('categoryTitle').textContent=translations[currentLang].categoryTitle;
-    document.getElementById('noResults').textContent=translations[currentLang].noResults;
-    document.getElementById('searchInput').placeholder=translations[currentLang].search;
-    langBtn.textContent = translations[currentLang].langBtn;
-    renderFilterTags();
-    renderQueesOptions();
-    filterContacts();
-    langMenu.style.display='none';
-  });
+/* --------------------------
+   EVENTS
+--------------------------- */
+document.getElementById('searchInput').oninput = filterContacts;
+document.getElementById('singleColBtn').onclick = () => { singleColumnMode = true; filterContacts(); };
+document.getElementById('normalColBtn').onclick = () => { singleColumnMode = false; filterContacts(); };
+document.getElementById('langBtn').onclick = () => {
+  const menu = document.getElementById('langMenu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+};
+document.querySelectorAll('#langMenu button').forEach(btn => {
+  btn.onclick = async () => {
+    document.getElementById('langMenu').style.display = 'none';
+    await switchLang(btn.dataset.lang);
+  };
 });
-
-document.getElementById('singleColBtn').addEventListener('click',()=>{singleColumnMode=true; filterContacts();});
-document.getElementById('normalColBtn').addEventListener('click',()=>{singleColumnMode=false; filterContacts();});
-
+(function(){
+  const startClosed = false;
+  document.querySelectorAll('.aside-card').forEach(card => {
+    const btn = card.querySelector('.accordion-btn');
+    const content = card.querySelector('.accordion-content');
+    const icon = card.querySelector('.accordion-icon');
+    if(!btn || !content) return;
+    if(startClosed){ content.classList.add('hidden'); icon.classList.remove('rotate-180'); }
+    else{ content.classList.remove('hidden'); icon.classList.add('rotate-180'); }
+    btn.addEventListener('click', () => {
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+    });
+  });
+})();
+(async function init() {
+  await switchLang(currentLang);
+  filterContacts();
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,42 @@
+{
+  "subtitle": "Explore your contacts",
+  "langBtn": "Language",
+  "all": "All",
+  "queesMap": {
+    "Millor Amic/Amiga": "Best Friend",
+    "Amic/Amiga": "Friend",
+    "Familia": "Family",
+    "Conegut/Coneguda": "Acquaintance"
+  },
+  "categories": {
+    "Surfers": "Surfers",
+    "Festa": "Party",
+    "Madrid": "Madrid",
+    "Matrimoni": "Marriage",
+    "Confiança": "Trust",
+    "Feina": "Work",
+    "Duo": "Duo",
+    "Insti": "School",
+    "Insti Clase": "School Class",
+    "Càmping": "Camping",
+    "Interès": "Interest",
+    "Guiri": "Tourist"
+  },
+  "nacionalities": {
+    "Catalunya": "Catalonia",
+    "Alemania": "Germany",
+    "Paisos Baixos": "Netherlands"
+  },
+  "descriptions": {
+    "Pau Oriol Oliva": "(Some sentences describing personality...)",
+    "David Ardila Coronado": "Boss",
+    "Bep Barneda Fusté": "Best friend of Pau in high school, now not.",
+    "Martí Ferrer": "Genius.",
+    "Laia Viton": "Just another TikToker.",
+    "Fee Lina": "Very pretty.",
+    "Floor Van Dongen": "Could be the love of my life.",
+    "Iris Cramer": "Currently mentally struggling.",
+    "Joy": "Very nice person when she wants.",
+    "Indy Maners": "Very nice person, very pretty."
+  }
+}

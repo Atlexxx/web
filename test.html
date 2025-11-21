@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ContactHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.card-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.card { background: white; border-radius: 1rem; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s; }
+.card img { width: 100%; height: 100%; object-fit: cover; }
+.thumb { width: 100%; aspect-ratio: 1 / 1; flex-shrink: 0; background: #eef2ff; display: flex; justify-content: center; align-items: center; }
+.info { padding: 0.75rem; }
+.tag { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.75rem; margin: 2px; cursor: pointer; }
+.grid.single-column { grid-template-columns: 1fr !important; }
+.quees-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+.quees-bar button { padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.75rem; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+.quees-bar button.active { background: #6366f1; color: white; border-color: #6366f1; }
+.accordion-btn { cursor: pointer; display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0.75rem 1rem; font-weight: bold; }
+.accordion-content { display: none; padding: 0.5rem 1rem; }
+.accordion-content.open { display: block; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+<div class="max-w-6xl mx-auto p-6">
+
+  <!-- HEADER -->
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold">ContactHub</h1>
+    <div id="subtitle" class="text-sm text-slate-600 mb-4"></div>
+
+    <!-- QUEES BAR -->
+    <div class="quees-bar" id="queesBar"></div>
+
+    <!-- SEARCH -->
+    <input id="searchInput" class="w-full p-3 rounded-full border bg-white" placeholder="Cerca..." />
+  </header>
+
+  <main class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <!-- LEFT FILTERS -->
+    <aside class="hidden lg:block space-y-4">
+
+      <!-- CATEGORIA -->
+      <div class="card-shadow rounded-2xl bg-white">
+        <button class="accordion-btn">Categoria
+          <svg class="w-6 h-6 transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="categoryFilters"></div>
+      </div>
+
+      <!-- NACIONALIDAD -->
+      <div class="card-shadow rounded-2xl bg-white">
+        <button class="accordion-btn">Nacionalitat
+          <svg class="w-6 h-6 transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="nacionalityFilters"></div>
+      </div>
+
+      <!-- ANYO -->
+      <div class="card-shadow rounded-2xl bg-white">
+        <button class="accordion-btn">Any de naixement
+          <svg class="w-6 h-6 transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="yearFilters"></div>
+      </div>
+
+    </aside>
+
+    <!-- CONTACT LIST -->
+    <section class="lg:col-span-3">
+      <div id="grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+      <div id="noResults" class="hidden p-6 bg-white rounded border text-slate-600">No s’han trobat resultats</div>
+    </section>
+  </main>
+</div>
+
+<script>
+const contacts=[
+  {"nom":"Pau Oriol Oliva","sobrenom":null,"any":2007,"nacionalitat":"Catalunya","desc_translations":{"ca":"Unes frases que descriguin la personalitat..."},"quees":"Millor Amic/Amiga","categoria":"Surfers,Festa,Madrid,Matrimoni,Confiança","imatge":"pau.jpg"},
+  {"nom":"David Ardila Coronado","sobrenom":"Deimos","any":2007,"nacionalitat":"Catalunya","desc_translations":{"ca":"Jefe"},"quees":"Millor Amic/Amiga","categoria":"Duo,Insti,Insti Clase,Confiança","imatge":"david.jpg"},
+  {"nom":"Bep Barneda Fusté","sobrenom":"Bepiii","any":2007,"nacionalitat":"Catalunya","desc_translations":{"ca":"Millor amic d’en Pau a Batxillerat, ara no."},"quees":"Amic/Amiga","categoria":"Festa,Madrid,Matrimoni,Confiança","imatge":"bep.jpg"},
+  {"nom":"Martí Ferrer","sobrenom":"Martrixx_","any":2007,"nacionalitat":"Catalunya","desc_translations":{"ca":"Geni."},"quees":"Millor Amic/Amiga","categoria":"Festa,Surfers,Insti,Insti Clase,Confiança","imatge":"marti.jpg"},
+  {"nom":"Laia Viton","sobrenom":null,"any":2007,"nacionalitat":"Catalunya","desc_translations":{"ca":"Una tiktoker mas."},"quees":"Millor Amic/Amiga","categoria":"Feina,Confiança","imatge":"laia.jpg"},
+  {"nom":"Fee Lina","sobrenom":null,"any":2009,"nacionalitat":"Paísos Baixos","desc_translations":{"ca":"Bastant guapa."},"quees":"Conegut/Coneguda","categoria":"Càmping,Interès,Guiri","imatge":"fee.jpg"},
+  {"nom":"Hans Müller","sobrenom":null,"any":2009,"nacionalitat":"Alemanya","desc_translations":{"ca":"Nou contacte d’Alemanya."},"quees":"Conegut/Coneguda","categoria":"Confiança","imatge":"hans.jpg"}
+];
+
+let currentLang='ca';
+let activeQuees='All';
+let singleColumnMode=false;
+
+// QUEES BAR
+const queesOrder=["All","Millor Amic/Amiga","Amic/Amiga","Familia","Conegut/Coneguda"];
+function renderQuees(){
+  const queesBar=document.getElementById('queesBar');
+  queesBar.innerHTML='';
+  queesOrder.forEach(q=>{
+    const btn=document.createElement('button');
+    btn.textContent=q;
+    if(q===activeQuees) btn.classList.add('active');
+    btn.onclick=()=>{ activeQuees=q; renderQuees(); filterContacts(); };
+    queesBar.appendChild(btn);
+  });
+}
+
+// RENDER CONTACTS
+const grid=document.getElementById('grid');
+function renderContacts(list){
+  grid.innerHTML='';
+  grid.classList.toggle('single-column', singleColumnMode);
+  if(list.length===0){ document.getElementById('noResults').classList.remove('hidden'); return; }
+  document.getElementById('noResults').classList.add('hidden');
+  list.forEach(c=>{
+    const sobrenom=c.sobrenom?` (${c.sobrenom})`:'';
+    const tags=c.categoria.split(',').map(t=>`<span class="tag">${t}</span>`).join('');
+    const card=document.createElement('div');
+    card.className='card'+(singleColumnMode?' row':'');
+    card.innerHTML=`<div class="thumb"><img src="img/${c.imatge}"/></div><div class="info"><h3 class="font-semibold">${c.nom}${sobrenom}</h3><p class="text-sm text-slate-700 mt-1">${c.desc_translations[currentLang]}</p><div class="mt-2 flex flex-wrap gap-1">${tags}</div></div>`;
+    grid.appendChild(card);
+  });
+}
+
+// FILTROS
+function renderFilters(){
+  const categoryFiltersDiv=document.getElementById('categoryFilters');
+  const nacionalityFiltersDiv=document.getElementById('nacionalityFilters');
+  const yearFiltersDiv=document.getElementById('yearFilters');
+  categoryFiltersDiv.innerHTML=''; nacionalityFiltersDiv.innerHTML=''; yearFiltersDiv.innerHTML='';
+
+  const categories=new Set(); contacts.forEach(c=>c.categoria.split(',').forEach(cat=>categories.add(cat.trim())));
+  categories.forEach(cat=>{ const btn=document.createElement('button'); btn.textContent=cat; btn.className='px-3 py-1 rounded-full bg-indigo-100 mb-1 hover:bg-indigo-200'; btn.onclick=filterContacts; categoryFiltersDiv.appendChild(btn); });
+
+  const nats=new Set(contacts.map(c=>c.nacionalitat).filter(Boolean));
+  nats.forEach(n=>{ const btn=document.createElement('button'); btn.textContent=n; btn.className='px-3 py-1 rounded-full bg-green-100 mb-1 hover:bg-green-200'; btn.onclick=filterContacts; nacionalityFiltersDiv.appendChild(btn); });
+
+  const years=new Set(contacts.map(c=>c.any).filter(Boolean));
+  years.forEach(y=>{ const btn=document.createElement('button'); btn.textContent=y; btn.className='px-3 py-1 rounded-full bg-yellow-100 mb-1 hover:bg-yellow-200'; btn.onclick=filterContacts; yearFiltersDiv.appendChild(btn); });
+}
+
+// FILTRO CONTACTOS
+function filterContacts(){
+  const term=document.getElementById('searchInput').value.toLowerCase();
+  const categoryBtns=Array.from(document.getElementById('categoryFilters').querySelectorAll('button')).filter(b=>b.classList.contains('active')).map(b=>b.textContent);
+  const natsBtns=Array.from(document.getElementById('nacionalityFilters').querySelectorAll('button')).filter(b=>b.classList.contains('active')).map(b=>b.textContent);
+  const yearBtns=Array.from(document.getElementById('yearFilters').querySelectorAll('button')).filter(b=>b.classList.contains('active')).map(b=>b.textContent);
+
+  const filtered=contacts.filter(c=>{
+    const matchesSearch=c.nom.toLowerCase().includes(term)||(c.sobrenom?c.sobrenom.toLowerCase().includes(term):false);
+    const matchesQuees=activeQuees==='All'?true:c.quees.includes(activeQuees);
+    const matchesCat=categoryBtns.length===0?true:categoryBtns.every(cat=>c.categoria.split(',').includes(cat));
+    const matchesNat=natsBtns.length===0?true:natsBtns.includes(c.nacionalitat);
+    const matchesYear=yearBtns.length===0?true:yearBtns.includes(String(c.any));
+    return matchesSearch && matchesQuees && matchesCat && matchesNat && matchesYear;
+  });
+  renderContacts(filtered);
+}
+
+// SEARCH
+document.getElementById('searchInput').addEventListener('input',filterContacts);
+
+// ACCORDION
+document.querySelectorAll('.accordion-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  const content=btn.nextElementSibling; content.classList.toggle('open');
+  btn.querySelector('svg').classList.toggle('rotate-180');
+}));
+
+// INIT
+renderQuees();
+renderFilters();
+renderContacts(contacts);
+
+</script>
+</body>
+</html>

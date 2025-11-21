@@ -1,0 +1,42 @@
+{
+  "subtitle": "Explora tus contactos",
+  "langBtn": "Idioma",
+  "all": "Todos",
+  "queesMap": {
+    "Millor Amic/Amiga": "Mejor Amigo/Amiga",
+    "Amic/Amiga": "Amigo/Amiga",
+    "Familia": "Familia",
+    "Conegut/Coneguda": "Conocido/Conocida"
+  },
+  "categories": {
+    "Surfers": "Surfistas",
+    "Festa": "Fiesta",
+    "Madrid": "Madrid",
+    "Matrimoni": "Matrimonio",
+    "Confiança": "Confianza",
+    "Feina": "Trabajo",
+    "Duo": "Dúo",
+    "Insti": "Insti",
+    "Insti Clase": "Clase Insti",
+    "Càmping": "Camping",
+    "Interès": "Interés",
+    "Guiri": "Turista"
+  },
+  "nacionalities": {
+    "Catalunya": "Cataluña",
+    "Alemania": "Alemania",
+    "Paisos Baixos": "Países Bajos"
+  },
+  "descriptions": {
+    "Pau Oriol Oliva": "(Unas frases que describan la personalidad...)",
+    "David Ardila Coronado": "Jefe",
+    "Bep Barneda Fusté": "Mejor amigo de Pau en Bachillerato, ahora no.",
+    "Martí Ferrer": "Genio.",
+    "Laia Viton": "Una tiktoker más.",
+    "Fee Lina": "Está buena, bastante guapa.",
+    "Floor Van Dongen": "Podría ser el amor de mi vida.",
+    "Iris Cramer": "Actualmente está fatal de la cabeza.",
+    "Joy": "Muy buena persona cuando quiere.",
+    "Indy Maners": "Muy buena persona, muy guapa."
+  }
+}
