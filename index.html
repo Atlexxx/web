@@ -12,33 +12,41 @@
 --------------------------- */
 .card { transition: all 0.3s; background: white; border-radius: 0.75rem; border: 1px solid #cbd5e1; overflow: hidden; display: flex; flex-direction: column; }
 .card.row { flex-direction: row; height: 160px; }
+.card.col { height: auto; }
 .card .thumb { background: #eef2ff; display: flex; align-items: center; justify-content: center; }
 .card.row .thumb { width: 150px; height: 158px; }
 .card.col .thumb { width: 100%; aspect-ratio: 1/1; }
 .card .thumb img { width: 100%; height: 100%; object-fit: cover; }
 .card .info { padding: 0.75rem; }
 .card.row .info { padding-left: 1rem; }
+
 /* TAGS */
 .tag, .filter-tag { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.75rem; cursor: pointer; }
 .tag.active, .filter-tag.active { background: #6366f1; color: white; }
+
 /* GRID */
 .grid.single-column { grid-template-columns: 1fr !important; }
 .grid.three-column { grid-template-columns: repeat(3, 1fr) !important; gap: 1rem; }
+
 /* MODE BUTTONS */
 .mode-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid #cbd5e1; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
 /* LANGUAGE MENU */
 .language-menu { position: relative; }
 .language-menu-content { display: none; position: absolute; background: white; min-width: 100px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0.25rem; z-index: 10; }
 .language-menu-content button { display: block; width: 100%; padding: 0.5rem; text-align: left; border: none; background: none; cursor: pointer; }
 .language-menu-content button:hover { background: #e0e7ff; }
+
 /* QUEES FILTER BAR */
 #queesFilterBar { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.25rem; background: white; border-radius: 9999px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
 .quees-btn { cursor: pointer; font-weight: 500; padding: 0.5rem 1rem; border-radius: 9999px; transition: all 0.2s; white-space: nowrap; }
 .quees-btn:hover { background-color: #6366f1; color: white; }
 .quees-btn.active { background-color: #6366f1; color: white; }
+
 /* FILTER BLOCKS */
 .filter-block { margin-bottom: 1rem; }
 .filter-block h4 { font-weight: 600; margin-bottom: 0.5rem; }
+
 /* ACCORDION */
 .aside-card { background: #f8fafc; border-radius: 1rem; padding: 0; overflow: hidden; border: 1px solid rgba(15,23,42,0.04); }
 .aside-card .accordion-btn { width: 100%; display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: transparent; border: none; cursor: pointer; }
@@ -54,61 +62,64 @@
 <div class="min-h-screen p-6">
 
 <header class="max-w-6xl mx-auto mb-6 flex flex-col gap-4">
-<div class="flex items-center justify-between">
-  <div>
-    <h1 id="title" class="text-2xl font-bold">ContactHub</h1>
-    <div id="subtitle" class="text-sm text-slate-600"></div>
-  </div>
-  <div class="flex gap-3 items-center">
-    <div class="language-menu">
-      <button id="langBtn" class="px-3 py-2 border rounded-full bg-white">Llengua</button>
-      <div id="langMenu" class="language-menu-content rounded">
-        <button data-lang="ca">Català</button>
-        <button data-lang="es">Castellà</button>
-        <button data-lang="en">English</button>
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 id="title" class="text-2xl font-bold">ContactHub</h1>
+      <div id="subtitle" class="text-sm text-slate-600"></div>
+    </div>
+
+    <div class="flex gap-3 items-center">
+      <div class="language-menu">
+        <button id="langBtn" class="px-3 py-2 border rounded-full bg-white">Llengua</button>
+        <div id="langMenu" class="language-menu-content rounded">
+          <button data-lang="ca">Català</button>
+          <button data-lang="es">Castellà</button>
+          <button data-lang="en">English</button>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <div id="singleColBtn" class="mode-btn" title="1 columna">☰</div>
+        <div id="normalColBtn" class="mode-btn" title="3 columnes">☷</div>
       </div>
     </div>
-    <div class="flex gap-2">
-      <div id="singleColBtn" class="mode-btn" title="1 columna">☰</div>
-      <div id="normalColBtn" class="mode-btn" title="3 columnes">☷</div>
-    </div>
   </div>
-</div>
-<div class="flex flex-col gap-3">
-  <div id="queesFilterBar"></div>
-  <input id="searchInput" placeholder="Cerca..." class="w-full p-3 rounded-full border bg-white" />
-</div>
+
+  <div class="flex flex-col gap-3">
+    <div id="queesFilterBar"></div>
+    <input id="searchInput" placeholder="Cerca..." class="w-full p-3 rounded-full border bg-white" />
+  </div>
 </header>
 
 <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
-<aside class="hidden lg:block space-y-4">
-  <div class="aside-card">
-    <button class="accordion-btn">
-      <h3 class="text-lg m-0 font-semibold">Categoria</h3>
-      <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
-    </button>
-    <div class="accordion-content" id="filterTags"></div>
-  </div>
-  <div class="aside-card">
-    <button class="accordion-btn">
-      <h3 class="text-lg m-0 font-semibold">Nacionalitat</h3>
-      <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
-    </button>
-    <div class="accordion-content" id="nacionalityFilters"></div>
-  </div>
-  <div class="aside-card">
-    <button class="accordion-btn">
-      <h3 class="text-lg m-0 font-semibold">Any de naixement</h3>
-      <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
-    </button>
-    <div class="accordion-content" id="yearFilters"></div>
-  </div>
-</aside>
+  <aside class="hidden lg:block space-y-4">
+    <div class="aside-card">
+      <button class="accordion-btn">
+        <h3 class="text-lg m-0 font-semibold">Categoria</h3>
+        <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="accordion-content" id="filterTags"></div>
+    </div>
+    <div class="aside-card">
+      <button class="accordion-btn">
+        <h3 class="text-lg m-0 font-semibold">Nacionalitat</h3>
+        <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="accordion-content" id="nacionalityFilters"></div>
+    </div>
+    <div class="aside-card">
+      <button class="accordion-btn">
+        <h3 class="text-lg m-0 font-semibold">Any de naixement</h3>
+        <svg class="ml-auto w-5 h-5 accordion-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+      <div class="accordion-content" id="yearFilters"></div>
+    </div>
+  </aside>
 
-<section class="lg:col-span-3">
-  <div id="grid" class="grid grid-cols-1 md:grid-cols-1 gap-4 transition-all duration-500"></div>
-  <div id="noResults" class="hidden p-6 bg-white rounded border text-slate-600"></div>
-</section>
+  <section class="lg:col-span-3">
+    <div id="grid" class="grid grid-cols-1 md:grid-cols-1 gap-4 transition-all duration-500"></div>
+    <div id="noResults" class="hidden p-6 bg-white rounded border text-slate-600"></div>
+  </section>
 </main>
 
 <footer class="max-w-6xl mx-auto mt-12 text-sm text-slate-500">
@@ -116,7 +127,41 @@
 </footer>
 </div>
 
+<!-- 🔵 BOTÓN PARA AÑADIR NUEVO CONTACTO -->
+<button id="addBtn"
+class="fixed bottom-6 right-6 bg-indigo-600 text-white w-14 h-14 rounded-full shadow-xl text-3xl flex items-center justify-center">+</button>
+
+<!-- 🔵 MODAL PARA AÑADIR CONTACTOS -->
+<div id="addModal"
+class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-xl w-full max-w-md space-y-4">
+    <h2 class="text-xl font-bold">Afegir nou contacte</h2>
+
+    <input id="new_nom" class="w-full p-2 border rounded" placeholder="Nom complet">
+    <input id="new_sobrenom" class="w-full p-2 border rounded" placeholder="Sobrenom (opcional)">
+    <input id="new_any" class="w-full p-2 border rounded" placeholder="Any de naixement">
+    <input id="new_nacionalitat" class="w-full p-2 border rounded" placeholder="Nacionalitat">
+    <textarea id="new_desc" class="w-full p-2 border rounded" placeholder="Descripció"></textarea>
+
+    <input id="new_quees" class="w-full p-2 border rounded"
+      placeholder="Què és? (separa amb comes)">
+    <input id="new_categoria" class="w-full p-2 border rounded"
+      placeholder="Categories (separa amb comes)">
+    <input id="new_imatge" class="w-full p-2 border rounded"
+      placeholder="Nom de la imatge (ex: foto.jpg)">
+
+    <div class="flex justify-end gap-3 pt-2">
+      <button id="cancelAdd" class="px-4 py-2 bg-slate-300 rounded">Cancel·lar</button>
+      <button id="saveAdd"
+        class="px-4 py-2 bg-indigo-600 text-white rounded">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <script>
+/* ============================================================
+                     TUS CONTACTOS ORIGINALES
+============================================================ */
 const contacts = [
   {"nom":"Pau Oriol Oliva","sobrenom":null,"any":"2007","nacionalitat":"Catalunya","desc":"(Unes frases que descriguin la personalitat...)","quees":"Millor Amic/Amiga,Familia","categoria":"Surfers,Festa,Madrid,Matrimoni,Confiança,Feina","imatge":"pau.jpg"},
   {"nom":"David Ardila Coronado","sobrenom":"Deimos","any":"","nacionalitat":"Catalunya","desc":"Jefe","quees":"Millor Amic/Amiga","categoria":"Duo,Insti,Insti Clase,Confiança","imatge":"david.jpg"},
@@ -135,9 +180,9 @@ let translations = {};
 let singleColumnMode = true;
 let queesSelectValue = "All";
 
-/* --------------------------
-   LOAD TRANSLATIONS
---------------------------- */
+/* ============================================================
+                     TRADUCCIONES
+============================================================ */
 async function loadTranslations(lang='ca'){
   const res = await fetch(`${lang}.json`);
   return await res.json();
@@ -148,6 +193,7 @@ async function switchLang(lang){
   currentLang = lang;
   document.getElementById('subtitle').textContent = translations.subtitle;
   document.getElementById('langBtn').textContent = translations.langBtn;
+
   renderFilterTags();
   renderNacionalityFilters();
   renderYearFilters();
@@ -155,14 +201,14 @@ async function switchLang(lang){
   filterContacts();
 }
 
-/* --------------------------
-   FILTER DATA
---------------------------- */
+/* ============================================================
+                     FILTROS DINÁMICOS
+============================================================ */
 let categoriesSet = new Set();
 contacts.forEach(c=>c.categoria.split(',').forEach(cat=>categoriesSet.add(cat.trim())));
 let categories = Array.from(categoriesSet).sort();
-const filterTagsDiv = document.getElementById('filterTags');
 
+const filterTagsDiv = document.getElementById('filterTags');
 function renderFilterTags(){
   filterTagsDiv.innerHTML='';
   categories.forEach(cat=>{
@@ -203,19 +249,21 @@ function renderYearFilters(){
   });
 }
 
-/* --------------------------
-   QUEES FILTER
---------------------------- */
+/* ============================================================
+                 BOTONES QUÈ ÉS / FILTRO SUPERIOR
+============================================================ */
 const queesOrder=["Millor Amic/Amiga","Amic/Amiga","Familia","Conegut/Coneguda"];
 const queesFilterBar=document.getElementById('queesFilterBar');
 
 function renderQueesFilterBar(){
   queesFilterBar.innerHTML='';
+
   const allBtn=document.createElement('button');
   allBtn.textContent=translations.all || 'Tots';
   allBtn.className='quees-btn active';
   allBtn.onclick=()=>{queesOrderBtnClick('All',allBtn);};
   queesFilterBar.appendChild(allBtn);
+
   queesOrder.forEach(q=>{
     const btn=document.createElement('button');
     btn.textContent=translations.queesMap && translations.queesMap[q] ? translations.queesMap[q] : q;
@@ -225,10 +273,18 @@ function renderQueesFilterBar(){
   });
 }
 
-/* --------------------------
-   RENDER CONTACTS
---------------------------- */
+function queesOrderBtnClick(val, btn){
+  queesSelectValue=val;
+  document.querySelectorAll(".quees-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  filterContacts();
+}
+
+/* ============================================================
+                     RENDER CONTACTOS
+============================================================ */
 const grid=document.getElementById('grid');
+
 function renderContacts(list){
   grid.innerHTML='';
   grid.classList.remove('single-column','three-column');
@@ -239,6 +295,7 @@ function renderContacts(list){
     document.getElementById('noResults').textContent=translations.noResults || 'No s’han trobat resultats';
     return;
   }
+
   document.getElementById('noResults').classList.add('hidden');
 
   list.forEach(c=>{
@@ -258,9 +315,9 @@ function renderContacts(list){
   });
 }
 
-/* --------------------------
-   FILTERING
---------------------------- */
+/* ============================================================
+                     FILTRAR CONTACTOS
+============================================================ */
 function filterContacts(){
   const term=document.getElementById('searchInput').value.toLowerCase();
   const activeCats=Array.from(filterTagsDiv.querySelectorAll('.filter-tag.active')).map(s=>s.dataset.orig);
@@ -279,22 +336,28 @@ function filterContacts(){
   renderContacts(filtered);
 }
 
-/* --------------------------
-   EVENTS
---------------------------- */
+/* ============================================================
+                     EVENTOS DE LA PÁGINA
+============================================================ */
 document.getElementById('searchInput').oninput = filterContacts;
 document.getElementById('singleColBtn').onclick = () => { singleColumnMode = true; filterContacts(); };
 document.getElementById('normalColBtn').onclick = () => { singleColumnMode = false; filterContacts(); };
+
 document.getElementById('langBtn').onclick = () => {
   const menu = document.getElementById('langMenu');
   menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 };
+
 document.querySelectorAll('#langMenu button').forEach(btn => {
   btn.onclick = async () => {
     document.getElementById('langMenu').style.display = 'none';
     await switchLang(btn.dataset.lang);
   };
 });
+
+/* ============================================================
+                     ACORDEONES (aside)
+============================================================ */
 (function(){
   const startClosed = false;
   document.querySelectorAll('.aside-card').forEach(card => {
@@ -310,10 +373,66 @@ document.querySelectorAll('#langMenu button').forEach(btn => {
     });
   });
 })();
+
+/* ============================================================
+               ✔️ SISTEMA PARA AÑADIR NUEVOS CONTACTOS
+============================================================ */
+const addBtn = document.getElementById("addBtn");
+const addModal = document.getElementById("addModal");
+const cancelAdd = document.getElementById("cancelAdd");
+const saveAdd = document.getElementById("saveAdd");
+
+addBtn.onclick = () => addModal.classList.remove("hidden");
+cancelAdd.onclick = () => addModal.classList.add("hidden");
+
+saveAdd.onclick = () => {
+
+  const newContact = {
+    nom: document.getElementById("new_nom").value.trim(),
+    sobrenom: document.getElementById("new_sobrenom").value.trim() || null,
+    any: document.getElementById("new_any").value.trim(),
+    nacionalitat: document.getElementById("new_nacionalitat").value.trim(),
+    desc: document.getElementById("new_desc").value.trim(),
+    quees: document.getElementById("new_quees").value.trim(),
+    categoria: document.getElementById("new_categoria").value.trim(),
+    imatge: document.getElementById("new_imatge").value.trim()
+  };
+
+  if (!newContact.nom) {
+    alert("El nom és obligatori");
+    return;
+  }
+
+  contacts.push(newContact);
+
+  /* Recalcular filtros */
+  categoriesSet = new Set();
+  contacts.forEach(c => c.categoria.split(',').forEach(cat => categoriesSet.add(cat.trim())));
+  categories = Array.from(categoriesSet).sort();
+  nacionalities = Array.from(new Set(contacts.map(c => c.nacionalitat))).sort();
+  years = Array.from(new Set(contacts.map(c => c.any))).sort();
+
+  renderFilterTags();
+  renderNacionalityFilters();
+  renderYearFilters();
+  renderQueesFilterBar();
+
+  filterContacts();
+
+  addModal.classList.add("hidden");
+
+  document.querySelectorAll("#addModal input, #addModal textarea")
+          .forEach(el => el.value = "");
+};
+
+/* ============================================================
+                     INICIALIZACIÓN
+============================================================ */
 (async function init() {
   await switchLang(currentLang);
   filterContacts();
 })();
 </script>
+
 </body>
 </html>
