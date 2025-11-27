@@ -16,16 +16,22 @@
     "Confiança": "Confianza",
     "Feina": "Trabajo",
     "Duo": "Dúo",
-    "Insti": "Insti",
-    "Insti Clase": "Clase Insti",
+    "Insti": "Instituto",
+    "Insti Clase": "Clase del Insti",
     "Càmping": "Camping",
     "Interès": "Interés",
-    "Guiri": "Turista"
+    "Guiri": "Guiri",
+    "FM": "FM",
+    "Discord": "Discord",
+    "Uni": "Universidad",
+    "Uni Clase": "Clase de la Uni"
   },
   "nacionalities": {
     "Catalunya": "Cataluña",
     "Alemania": "Alemania",
-    "Paisos Baixos": "Países Bajos"
+    "Paisos Baixos": "Países Bajos",
+    "Espanya": "España",
+    "Ucranía": "Ucrania"
   },
   "descriptions": {
     "Pau Oriol Oliva": "(Unas frases que describan la personalidad...)",
@@ -37,6 +43,20 @@
     "Floor Van Dongen": "Podría ser el amor de mi vida.",
     "Iris Cramer": "Actualmente está fatal de la cabeza.",
     "Joy": "Muy buena persona cuando quiere.",
-    "Indy Maners": "Muy buena persona, muy guapa."
-  }
+    "Indy Maners": "Muy buena persona, muy guapa.",
+    "Bram Van Dongen": "Genio de los surfers.",
+    "Bruno Rizzo": "Muy buena persona, gran amigo para siempre.",
+    "Albert Budria": "Muy buena persona, curioso.",
+    "Daniel Salas": "Jugador de Nintendo.",
+    "Pau Puig": "Pau Puig (Jugador de Roblox).",
+    "Eduardo Nerio": "Mi negrito.",
+    "Celia": "Cece.",
+    "Alba": "Buena amiguita.",
+    "Nuria Trillo": "Sus cumpleaños sirven de mucho.",
+    "Raül Ruiz": "Salva uni.",
+    "Marta": "Una compañera/amiga de la uni.",
+    "Iva": "Top en la uni.",
+    "Ruth": "Compañera de beca.."
+  },
+  "noResults": "No se han encontrado resultados"
 }

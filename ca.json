@@ -17,26 +17,46 @@
     "Feina": "Feina",
     "Duo": "Duo",
     "Insti": "Insti",
-    "Insti Clase": "Classe Insti",
+    "Insti Clase": "Insti Clase",
     "Càmping": "Càmping",
     "Interès": "Interès",
-    "Guiri": "Guiri"
+    "Guiri": "Guiri",
+    "FM": "FM",
+    "Discord": "Discord",
+    "Uni": "Uni",
+    "Uni Clase": "Uni Clase"
   },
   "nacionalities": {
     "Catalunya": "Catalunya",
     "Alemania": "Alemanya",
-    "Paisos Baixos": "Països Baixos"
+    "Paisos Baixos": "Països Baixos",
+    "Espanya": "Espanya",
+    "Ucranía": "Ucraïna"
   },
   "descriptions": {
     "Pau Oriol Oliva": "(Unes frases que descriguin la personalitat...)",
     "David Ardila Coronado": "Jefe",
     "Bep Barneda Fusté": "Millor amic d’en Pau a Batxillerat, ara no.",
     "Martí Ferrer": "Geni.",
-    "Laia Viton": "Una tiktoker mas.",
+    "Laia Viton": "Una tiktoker més.",
     "Fee Lina": "Està bona, bastant guapa.",
     "Floor Van Dongen": "Podria ser l’amor de la meva vida.",
     "Iris Cramer": "Actualment està fatal del cap.",
     "Joy": "Molt bona persona quan vol.",
-    "Indy Maners": "Molt bona persona, molt guapa."
-  }
+    "Indy Maners": "Molt bona persona, molt guapa.",
+    "Bram Van Dongen": "Geni de surfers.",
+    "Bruno Rizzo": "Molt bona persona, gran amic per sempre.",
+    "Albert Budria": "Molt bona persona, curiós.",
+    "Daniel Salas": "Nintendo player.",
+    "Pau Puig": "Pau Puig (Roblox Player).",
+    "Eduardo Nerio": "Mi negrito.",
+    "Celia": "Cece.",
+    "Alba": "Bona amigueta.",
+    "Nuria Trillo": "Els seus cumples serveixen de molt.",
+    "Raül Ruiz": "Salva uni.",
+    "Marta": "Una companya/amiga d'uni.",
+    "Iva": "Uni top tier.",
+    "Ruth": "Companya beca.."
+  },
+  "noResults": "No s’han trobat resultats"
 }

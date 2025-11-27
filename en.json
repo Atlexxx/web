@@ -16,27 +16,47 @@
     "Confiança": "Trust",
     "Feina": "Work",
     "Duo": "Duo",
-    "Insti": "School",
-    "Insti Clase": "School Class",
+    "Insti": "High School",
+    "Insti Clase": "Classmates",
     "Càmping": "Camping",
     "Interès": "Interest",
-    "Guiri": "Tourist"
+    "Guiri": "Tourist",
+    "FM": "FM",
+    "Discord": "Discord",
+    "Uni": "University",
+    "Uni Clase": "University Class"
   },
   "nacionalities": {
     "Catalunya": "Catalonia",
     "Alemania": "Germany",
-    "Paisos Baixos": "Netherlands"
+    "Paisos Baixos": "Netherlands",
+    "Espanya": "Spain",
+    "Ucranía": "Ukraine"
   },
   "descriptions": {
     "Pau Oriol Oliva": "(Some sentences describing personality...)",
     "David Ardila Coronado": "Boss",
-    "Bep Barneda Fusté": "Best friend of Pau in high school, now not.",
+    "Bep Barneda Fusté": "Pau's best friend in high school, not anymore.",
     "Martí Ferrer": "Genius.",
     "Laia Viton": "Just another TikToker.",
-    "Fee Lina": "Very pretty.",
+    "Fee Lina": "Pretty, quite attractive.",
     "Floor Van Dongen": "Could be the love of my life.",
-    "Iris Cramer": "Currently mentally struggling.",
-    "Joy": "Very nice person when she wants.",
-    "Indy Maners": "Very nice person, very pretty."
-  }
+    "Iris Cramer": "Currently struggling mentally.",
+    "Joy": "Very nice person when she wants to be.",
+    "Indy Maners": "Very nice person, very pretty.",
+    "Bram Van Dongen": "Surfer genius.",
+    "Bruno Rizzo": "Very good person, lifelong friend.",
+    "Albert Budria": "Very good person, curious.",
+    "Daniel Salas": "Nintendo player.",
+    "Pau Puig": "Pau Puig (Roblox Player).",
+    "Eduardo Nerio": "My little dark-skinned buddy.",
+    "Celia": "Cece.",
+    "Alba": "Nice little friend.",
+    "Nuria Trillo": "Her birthdays are very useful.",
+    "Raül Ruiz": "Saves uni.",
+    "Marta": "A uni classmate/friend.",
+    "Iva": "Top-tier at uni.",
+    "Ruth": "Scholarship mate.."
+  },
+  "noResults": "No results found"
 }
